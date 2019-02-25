@@ -1,28 +1,27 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import RenderMap from './components/RenderMap';
+import CalculateDistance from './components/CalculateDistance';
+import {GoogleApiWrapper} from "google-maps-react"
 
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state={
+      dist: {}
+    }
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Walk or Cab</h1>
+        <RenderMap maps={this.props}/>
+        <CalculateDistance maps={this.props}/>
       </div>
     );
   }
 }
 
-export default App;
+export default GoogleApiWrapper({
+  apiKey: process.env.REACT_APP_API_KEY
+})(App);
