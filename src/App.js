@@ -1,41 +1,69 @@
 import React, { Component } from 'react';
 import './App.css';
 import RenderMap from './components/RenderMap';
-import CalcDriving from './components/CalcDriving';
-import CalcWalking from './components/CalcWalking';
-import DestinationForm from './components/DestinationForm'
-
+import CalcTravel from './components/CalcTravel';
+import DestinationForm from './components/DestinationForm';
+import { Redirect, Route } from 'react-router-dom';
 import {GoogleApiWrapper} from "google-maps-react"
 
 class App extends Component {
   constructor(props) {
     super(props)
     this.state={
-      destination: '',
-      getResults: false
+      getWalk: false,
+      getDrive: false,
+      displayResults: false,
+      walkData: {
+        origins: ['Bellmore, NewYork'],
+        destinations: [],
+        travelMode: 'WALKING',
+        unitSystem: props.google.maps.UnitSystem.IMPERIAL,
+      },
+      driveData: {
+        origins: ['Bellmore, NewYork'],
+        destinations: [],
+        travelMode: 'DRIVING',
+        unitSystem: props.google.maps.UnitSystem.IMPERIAL,
+      }
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.reset = this.reset.bind(this)
   }
 
   reset() {
-    const { destination, getResults } = this.state;
     this.setState({
-      destination: '',
+      getWalk: false,
+      getDrive: false,
+      displayResults: false
     })
   }
 
   handleSubmit(ev) {
     ev.preventDefault()
     this.setState({
-      getResults: true
+      getWalk: true,
+      getDrive: true,
+      displayResults: true
     })
+
   }
 
   handleChange(ev) {
-    const { name, value } = ev.target;
+    const { value } = ev.target;
     this.setState({
-      [name]: value
+      walkData: {
+        origins: ['Bellmore, NewYork'],
+        destinations: [`${value}`],
+        travelMode: 'WALKING',
+        unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
+      },
+      driveData: {
+        origins: ['Bellmore, NewYork'],
+        destinations: [`${value}`],
+        travelMode: 'DRIVING',
+        unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
+      }
     })
   }
 
@@ -43,11 +71,35 @@ class App extends Component {
     return (
       <div className="App">
         <h1>Walk or Cab</h1>
-        <DestinationForm maps={this.props} handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-          <CalcWalking
-            getResults={this.state.getResults}
-            destination={this.state.destination}
-            maps={this.props}/>
+        <Route path='/' render={(props) =>
+        <DestinationForm
+          maps={this.props}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}/>
+        }/>
+        <Route exact path="/" render={() => (
+          (this.state.displayResults === true)? (
+            <Redirect push to="/results"/>
+          ) : (
+            <div></div>
+          )
+        )}/>
+      <Route path='/results' render={()=>
+        <>
+          <CalcTravel
+            getResults={this.state.getWalk}
+            travelData={this.state.walkData}
+            moveType='walk'
+            maps={this.props}
+            reset={this.reset}/>
+          <CalcTravel
+            getResults={this.state.getDrive}
+            travelData={this.state.driveData}
+            moveType='drive'
+            maps={this.props}
+            reset={this.reset}/>
+        </>
+      }/>
       </div>
     );
   }

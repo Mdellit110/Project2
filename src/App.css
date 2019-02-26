@@ -15,11 +15,23 @@
   align-items: baseline;
 }
 
+form {
+   margin: 0 auto;
+   text-align: center;
+   margin-bottom: 10px;
+ }
+
 h1 {
   margin-top: 0;
   text-align: center;
 }
 
-.time_travel {
+.DisplayResults {
+  color: white;
+  font-weight: bold;
+  padding: 2%;
+  background: blue;
   margin: 0 auto;
+  margin-top: 5px;
+  border-radius: 10px;
 }
