@@ -1,4 +1,5 @@
 import React from 'react'
+
 const DestinationForm = (props) => {
   return (
     <div>
@@ -7,7 +8,7 @@ const DestinationForm = (props) => {
           placeholder="Where to?"
           name="destination"
           value={props.destination}
-          onChange={props.handleChange} />
+          onChange={props.handleChange}/>
           <button>go</button>
       </form>
     </div>

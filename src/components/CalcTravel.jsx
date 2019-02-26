@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import DisplayResults from './DisplayResults'
+
 class CalcTravel extends Component {
   constructor(props) {
     super(props)
     this.state={
+      returnedData: {
         distance: '',
         duration: '',
         to: '',
         from: '',
+      }
     }
   }
 
@@ -28,12 +30,15 @@ class CalcTravel extends Component {
                 const duration = element.duration.text;
                 const from = origins[i];
                 const to = destinations[j];
-                this.setState(prevState => ({
+                this.setState({
+                  returnedData: {
                     distance: distance,
                     duration: duration,
                     to: to,
                     from: from
-                }))
+                  }
+                })
+              this.props.set(this.state.returnedData)
               this.props.reset()
             }
           }
@@ -41,10 +46,7 @@ class CalcTravel extends Component {
       })
     }
     return (
-      <DisplayResults
-        state={this.state}
-        props={this.props}
-        />
+      <></>
     )
   }
 }

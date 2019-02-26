@@ -3,8 +3,10 @@ import './App.css';
 import RenderMap from './components/RenderMap';
 import CalcTravel from './components/CalcTravel';
 import DestinationForm from './components/DestinationForm';
+import DisplayResults from './components/DisplayResults';
+import CalcBestRoute from './components/CalcBestRoute';
 import { Redirect, Route } from 'react-router-dom';
-import {GoogleApiWrapper} from "google-maps-react"
+import {GoogleApiWrapper} from "google-maps-react";
 
 class App extends Component {
   constructor(props) {
@@ -13,14 +15,17 @@ class App extends Component {
       getWalk: false,
       getDrive: false,
       displayResults: false,
+      currentLocation: '',
+      walkCalcs: {},
+      driveCalcs: {},
       walkData: {
-        origins: ['Bellmore, NewYork'],
+        origins: [],
         destinations: [],
         travelMode: 'WALKING',
         unitSystem: props.google.maps.UnitSystem.IMPERIAL,
       },
       driveData: {
-        origins: ['Bellmore, NewYork'],
+        origins: [],
         destinations: [],
         travelMode: 'DRIVING',
         unitSystem: props.google.maps.UnitSystem.IMPERIAL,
@@ -28,6 +33,8 @@ class App extends Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.setWalk = this.setWalk.bind(this)
+    this.setDrive = this.setDrive.bind(this)
     this.reset = this.reset.bind(this)
   }
 
@@ -35,7 +42,19 @@ class App extends Component {
     this.setState({
       getWalk: false,
       getDrive: false,
-      displayResults: false
+      displayResults: false,
+    })
+  }
+
+  setWalk(walkCalcs) {
+    this.setState({
+      walkCalcs: walkCalcs
+    })
+  }
+
+  setDrive(driveCalcs) {
+    this.setState({
+      driveCalcs: driveCalcs,
     })
   }
 
@@ -53,13 +72,13 @@ class App extends Component {
     const { value } = ev.target;
     this.setState({
       walkData: {
-        origins: ['Bellmore, NewYork'],
+        origins: [`${this.state.currentLocation}`],
         destinations: [`${value}`],
         travelMode: 'WALKING',
         unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
       },
       driveData: {
-        origins: ['Bellmore, NewYork'],
+        origins: [`${this.state.currentLocation}`],
         destinations: [`${value}`],
         travelMode: 'DRIVING',
         unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
@@ -67,16 +86,27 @@ class App extends Component {
     })
   }
 
+  componentDidMount() {
+    navigator.geolocation.watchPosition((position) => {
+      this.setState({
+        currentLocation: `${position.coords.latitude}, ${position.coords.longitude}`
+      })
+    })
+  }
+
   render() {
+
     return (
       <div className="App">
         <h1>Walk or Cab</h1>
-        <Route path='/' render={(props) =>
+
+        <Route exact path='/' render={(props) =>
         <DestinationForm
           maps={this.props}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}/>
         }/>
+
         <Route exact path="/" render={() => (
           (this.state.displayResults === true)? (
             <Redirect push to="/results"/>
@@ -84,22 +114,34 @@ class App extends Component {
             <div></div>
           )
         )}/>
+
       <Route path='/results' render={()=>
-        <>
-          <CalcTravel
-            getResults={this.state.getWalk}
-            travelData={this.state.walkData}
-            moveType='walk'
-            maps={this.props}
-            reset={this.reset}/>
-          <CalcTravel
-            getResults={this.state.getDrive}
-            travelData={this.state.driveData}
-            moveType='drive'
-            maps={this.props}
-            reset={this.reset}/>
-        </>
-      }/>
+          <>
+            <CalcTravel
+              getResults={this.state.getWalk}
+              travelData={this.state.walkData}
+              maps={this.props}
+              reset={this.reset}
+              set={this.setWalk}/>
+            <CalcTravel
+              getResults={this.state.getDrive}
+              travelData={this.state.driveData}
+              maps={this.props}
+              reset={this.reset}
+              set={this.setDrive}/>
+            <DisplayResults
+              moveType='walk'
+              state={this.state.walkCalcs}
+            />
+            <DisplayResults
+              moveType='drive'
+              state={this.state.driveCalcs}
+            />
+          <CalcBestRoute
+            walk={this.state.walkCalcs}
+            drive={this.state.driveCalcs}/>
+          </>
+        }/>
       </div>
     );
   }
