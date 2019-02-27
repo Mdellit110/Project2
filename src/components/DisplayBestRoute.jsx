@@ -1,9 +1,9 @@
 import React from 'react';
 
 const DisplayBestRoute = (props) => (
-<div className='DisplayBestRoute'>
-  <p>it was be faster if you {props.moveType}</p>
-  <p>you will most likely save {props.diff} off your trip</p>
+<div className='best-route'>
+  <div>you should {props.moveType}</div>
+  <div>you'll save {props.diff} minutes</div>
 </div>
 )
 

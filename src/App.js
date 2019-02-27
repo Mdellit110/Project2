@@ -42,7 +42,7 @@ class App extends Component {
     this.setState({
       getWalk: false,
       getDrive: false,
-      displayResults: false,
+      displayResults: true,
     })
   }
 
@@ -63,7 +63,7 @@ class App extends Component {
     this.setState({
       getWalk: true,
       getDrive: true,
-      displayResults: true
+      displayResults: false
     })
 
   }
@@ -95,12 +95,22 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div className="App">
         <h1>Walk or Cab</h1>
-
-        <Route exact path='/' render={(props) =>
+          <CalcTravel
+            getResults={this.state.getWalk}
+            travelData={this.state.walkData}
+            maps={this.props}
+            reset={this.reset}
+            set={this.setWalk}/>
+          <CalcTravel
+            getResults={this.state.getDrive}
+            travelData={this.state.driveData}
+            maps={this.props}
+            reset={this.reset}
+            set={this.setDrive}/>
+        <Route path='/' render={(props) =>
         <DestinationForm
           maps={this.props}
           handleChange={this.handleChange}
@@ -117,29 +127,23 @@ class App extends Component {
 
       <Route path='/results' render={()=>
           <>
-            <CalcTravel
-              getResults={this.state.getWalk}
-              travelData={this.state.walkData}
-              maps={this.props}
-              reset={this.reset}
-              set={this.setWalk}/>
-            <CalcTravel
-              getResults={this.state.getDrive}
-              travelData={this.state.driveData}
-              maps={this.props}
-              reset={this.reset}
-              set={this.setDrive}/>
-            <DisplayResults
-              moveType='walk'
-              state={this.state.walkCalcs}
-            />
-            <DisplayResults
-              moveType='drive'
-              state={this.state.driveCalcs}
-            />
-          <CalcBestRoute
-            walk={this.state.walkCalcs}
-            drive={this.state.driveCalcs}/>
+            <div className='all-results'>
+              <div className='result-container'>
+                <DisplayResults
+                  moveType='walk'
+                  state={this.state.walkCalcs}
+                />
+                <DisplayResults
+                  moveType='drive'
+                  state={this.state.driveCalcs}
+                />
+              </div>
+              <div className='best-container'>
+                <CalcBestRoute
+                  walk={this.state.walkCalcs}
+                  drive={this.state.driveCalcs}/>
+              </div>
+            </div>
           </>
         }/>
       </div>

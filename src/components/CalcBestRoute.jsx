@@ -2,35 +2,26 @@ import React from 'react';
 import DisplayBestRoute from './DisplayBestRoute'
 
 const CalcBestRoute = (props) => {
-  const driveDist = parseFloat(props.drive.distance);
-  const driveDur = parseFloat(props.drive.duration);
-  const walkDist = parseFloat(props.walk.distance);
-  const walkDur = parseFloat(props.walk.duration);
   let best = '';
   let diff = null;
-
-  if (driveDur >= walkDur) {
-    console.log({driveDur});
-    console.log({walkDur});
-    console.log('hi');
-    best = 'walk'
-    console.log({best});
-  } else {
-    console.log({driveDur});
-    console.log({walkDur});
-    console.log('hi');
-    best = 'drive'
-    console.log({best});
-  }
-  if (driveDist >= walkDist) {
-    diff = driveDist - walkDist
-  } else {
-    diff = walkDist - driveDist
+  if (props.drive.duration) {
+    const driveDur = parseInt(props.drive.duration);
+    const walkDur = parseInt(props.walk.duration);
+    console.log(walkDur);
+    if (driveDur >= walkDur) {
+      diff = driveDur - walkDur
+      best = 'walk'
+    } else {
+      diff = walkDur - driveDur
+      best = 'drive'
+    }
   }
   return (
+    <>
     <DisplayBestRoute
       moveType={best}
       diff={diff}/>
+    </>
   )
 }
 
