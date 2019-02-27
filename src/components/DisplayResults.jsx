@@ -2,9 +2,9 @@ import React from 'react'
 
 const DisplayResults = (props) => {
   return(
-    <div className='both-results'>
-      <h1>{props.moveType.toUpperCase()}</h1>
-      <p>{props.state.duration}</p>
+    <div className={props.result}>
+      <h2>{props.moveType.toUpperCase()}</h2>
+      <p className=''>{props.state.duration}</p>
     </div>
   )
 }

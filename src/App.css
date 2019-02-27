@@ -27,11 +27,12 @@ form {
 
 button {
   background: #86D4DE;
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: #683E08;
-  width: 8vmin;
-  height: 8vmin;
-  border-radius: 80%;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
   box-shadow: 0 15px 38px rgba(0,0,0,0.30), 0 11px 12px rgba(0,0,0,0.22);
 }
 
@@ -45,14 +46,22 @@ input {
 
 }
 
+header {
+  height: 10vh;
+  font-size: 1.5rem;
+}
+
 .title {
   color: #683E08;
+  margin: 0;
+  height: 10vh;
+  text-align: center;
   font-weight: 800;
 }
 
-h1 {
+h2 {
   color: #683E08;
-  font-size: 5rem;
+  font-size: 80%;
   margin: 0;
   text-align: center;
 }
@@ -81,14 +90,23 @@ p {
   justify-content: space-around;
 }
 
-.both-results {
+.drive-results {
   color: #683E08;
   font-size: 2rem;
   text-align: center;
   background: #86D4DE;
-  height: 15vw;
-  width: 25vw;
+  padding: 1%;
   border-radius: 10px;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.walk-results {
+  color: #683E08;
+  font-size: 2rem;
+  text-align: center;
+  background: #86D4DE;
+  border-radius: 10px;
+  padding: 1%;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }
 
@@ -97,8 +115,7 @@ p {
   font-size: 2rem;
   text-align: center;
   background: #86D4DE;
-  height: 20vh;
-  width: 30vw;
   border-radius: 10px;
+  padding: 1$;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
 }

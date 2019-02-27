@@ -9,7 +9,7 @@ const DestinationForm = (props) => {
           name="destination"
           value={props.destination}
           onChange={props.handleChange}/>
-          <button>go</button>
+        <button>GO</button>
       </form>
     </div>
   )

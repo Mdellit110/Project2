@@ -97,24 +97,26 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <h1 className='title'>WALK or DRIVE</h1>
-          <CalcTravel
-            getResults={this.state.getWalk}
-            travelData={this.state.walkData}
-            maps={this.props}
-            reset={this.reset}
-            set={this.setWalk}/>
-          <CalcTravel
-            getResults={this.state.getDrive}
-            travelData={this.state.driveData}
-            maps={this.props}
-            reset={this.reset}
-            set={this.setDrive}/>
-        <Route path='/' render={(props) =>
-        <DestinationForm
+        <header>
+          <h1 className='title'>WALK or DRIVE</h1>
+        </header>
+        <CalcTravel
+          getResults={this.state.getWalk}
+          travelData={this.state.walkData}
           maps={this.props}
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}/>
+          reset={this.reset}
+          set={this.setWalk}/>
+        <CalcTravel
+          getResults={this.state.getDrive}
+          travelData={this.state.driveData}
+          maps={this.props}
+          reset={this.reset}
+          set={this.setDrive}/>
+        <Route path='/' render={(props) =>
+            <DestinationForm
+              maps={this.props}
+              handleChange={this.handleChange}
+              handleSubmit={this.handleSubmit}/>
         }/>
 
         <Route exact path="/" render={() => (
@@ -125,15 +127,17 @@ class App extends Component {
           )
         )}/>
 
-      <Route path='/results' render={()=>
+        <Route path='/results' component={()=>
           <>
             <div className='all-results'>
               <div className='result-container'>
                 <DisplayResults
+                  result='walk-results'
                   moveType='walk'
                   state={this.state.walkCalcs}
                 />
                 <DisplayResults
+                  result='drive-results'
                   moveType='drive'
                   state={this.state.driveCalcs}
                 />
