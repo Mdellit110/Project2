@@ -1,31 +1,27 @@
 Walk or Cab
 
-MVP: find how long it will take to travel somewhere based on traffic giving a start point and end point.
+MVP: find how long it will take to travel somewhere based on traffic from current location to a given end point.
 
 PostMVP:
-- [ ] Set start point based on current location using geolocation api
-- [ ] Check for walk ETA and driving ETA
-- [ ] Compare the two ETAs to suggest faster option
-- [ ] Store data saved from average walking speed per person to more accurately suggest option
+- [X] Check for walk ETA and driving ETA
+- [X] Compare the two ETAs to suggest faster option
 - [ ] Use the actual map to set the destination and show routes
 
 APIs:
-- [ ] Google Maps javascript API
-- [ ] Google Distance matrix API
-- [ ] Google Geocoding API
-- [ ] Google Geolocation API
+-  Google Maps javascript API
+-  Google Distance matrix service
+
 
 Libraries:
-- [ ] Google-maps-react
-- [ ] Google-distance-matrix
+-  google-maps-react
+-  react-router-dom
 
 Components:
-- [ ] RenderMap- renders a basic map on screen
-- [ ] DestinationForm- allow user to input their destination and current location manually
-- [ ] CalcDifference - calculate if walking time is faster then driving and return some comparative stats
-- [ ] CalcWalking- calculates time to walk
-- [ ] CalcDriving- calculates time to drive
-- [ ] DisplayOptions- will render the page showing data received from CalcDifference
+- [ ] DestinationForm - allow user to input their destination
+- [ ] CalcTravel - calculates time and distance from current location to set destination and returns data to state
+- [ ] CalcBestRoute - compared data taken from calc travel and compares to find faster option
+- [ ] DisplayResults - displays the time it will take to travel for both walk and drive
+- [ ] DisplayBestRoute - displays a suggestion for the best method of transportation
 
 
 Expected issues:
