@@ -8,21 +8,17 @@
   width: 100vw;
   font-family: 'Quicksand', sans-serif;
 }
-.Map{
-  height: 100%;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: baseline;
-}
 
 form {
-   margin: 0 auto 0 auto;
-   text-align: center;
-   margin-bottom: 1vh;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  position: fixed;
+  margin: 10vh auto 0 auto;
+  text-align: center;
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
  }
 
 button {
@@ -36,15 +32,45 @@ button {
   box-shadow: 0 15px 38px rgba(0,0,0,0.30), 0 11px 12px rgba(0,0,0,0.22);
 }
 
-input {
+input, .autocomplete-dropdown-container {
+  background-color: white;
+  color: #683E08;
+  border-radius: 10px;
   border: none;
-  border-radius: 10vmin;
-  font-size: 2rem;
+  width: 55vw;
+  font-size: 7vw;
   text-align: center;
   margin-right: 1vw;
-  box-shadow: 0 15px 38px rgba(0,0,0,0.30), 0 11px 12px rgba(0,0,0,0.22);
-
 }
+
+.autocomplete-dropdown-container {
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+  width: 55.2vw;
+}
+
+input {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+input:focus {
+  outline: none;
+}
+
+.suggestion-item {
+  font-size: 3vw;
+  text-align: center;
+  width: 55vw;
+}
+
+.suggestion-item--active {
+  font-size: 3vw;
+  text-align: center;
+  width: 55vw;
+  background-color: #86D4DE;
+}
+
 
 header {
   height: 10vh;
@@ -59,19 +85,12 @@ header {
   font-weight: 800;
 }
 
-h2 {
-  color: #683E08;
-  font-size: 80%;
-  margin: 0;
-  text-align: center;
-}
-
 p {
   margin: 0;
 }
 
 .all-results {
-  margin: 10vh auto 0 auto;
+  margin: 20vh auto 0 auto;
   font-weight: bold;
 }
 
@@ -92,7 +111,7 @@ p {
 
 .drive-results {
   color: #683E08;
-  font-size: 2rem;
+  font-size: 4vw;
   text-align: center;
   background: #86D4DE;
   padding: 1%;
@@ -102,7 +121,7 @@ p {
 
 .walk-results {
   color: #683E08;
-  font-size: 2rem;
+  font-size: 4vw;
   text-align: center;
   background: #86D4DE;
   border-radius: 10px;
@@ -112,10 +131,17 @@ p {
 
 .best-route {
   color: #683E08;
-  font-size: 2rem;
+  font-size: 4vw;
   text-align: center;
   background: #86D4DE;
   border-radius: 10px;
-  padding: 1$;
+  padding: 1%;
   box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+h2 {
+  color: #683E08;
+  font-size: 6vw;
+  margin: 0;
+  text-align: center;
 }

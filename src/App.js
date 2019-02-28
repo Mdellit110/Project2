@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import RenderMap from './components/RenderMap';
 import CalcTravel from './components/CalcTravel';
-import DestinationForm from './components/DestinationForm';
+import AutoCompleteInput from './components/TestForm';
 import DisplayResults from './components/DisplayResults';
 import CalcBestRoute from './components/CalcBestRoute';
 import { Redirect, Route } from 'react-router-dom';
@@ -31,10 +31,9 @@ class App extends Component {
         unitSystem: props.google.maps.UnitSystem.IMPERIAL,
       }
     }
-    this.handleChange = this.handleChange.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
     this.setWalk = this.setWalk.bind(this)
     this.setDrive = this.setDrive.bind(this)
+    this.setOriginDestination = this.setOriginDestination.bind(this)
     this.reset = this.reset.bind(this)
   }
 
@@ -58,28 +57,20 @@ class App extends Component {
     })
   }
 
-  handleSubmit(ev) {
-    ev.preventDefault()
+  setOriginDestination(address) {
     this.setState({
       getWalk: true,
       getDrive: true,
-      displayResults: false
-    })
-
-  }
-
-  handleChange(ev) {
-    const { value } = ev.target;
-    this.setState({
+      displayResults: false,
       walkData: {
         origins: [`${this.state.currentLocation}`],
-        destinations: [`${value}`],
+        destinations: [`${address}`],
         travelMode: 'WALKING',
         unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
       },
       driveData: {
         origins: [`${this.state.currentLocation}`],
-        destinations: [`${value}`],
+        destinations: [`${address}`],
         travelMode: 'DRIVING',
         unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
       }
@@ -113,10 +104,10 @@ class App extends Component {
           reset={this.reset}
           set={this.setDrive}/>
         <Route path='/' render={(props) =>
-            <DestinationForm
-              maps={this.props}
-              handleChange={this.handleChange}
-              handleSubmit={this.handleSubmit}/>
+            <AutoCompleteInput
+              setOriginDestination={this.setOriginDestination}
+              handleSubmit={this.handleSubmit}
+            />
         }/>
 
         <Route exact path="/" render={() => (
@@ -156,5 +147,5 @@ class App extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_API_KEY
+  apiKey: process.env.REACT_APP_API_KEY,
 })(App);
