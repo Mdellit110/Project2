@@ -1,23 +1,10 @@
-import React, { Component } from 'react';
 
-class CalcTravel extends Component {
-  constructor(props) {
-    super(props)
-    this.state={
-      returnedData: {
-        distance: '',
-        duration: '',
-        to: '',
-        from: '',
-      }
-    }
-  }
 
-  render() {
-    if (this.props.getResults){
-    const resp = new this.props.maps.google.maps.DistanceMatrixService();
+const CalcTravel = (props) => {
+  debugger;
+    const resp = new props.maps.google.maps.DistanceMatrixService();
       resp.getDistanceMatrix(
-        this.props.travelData,
+        props.travelData,
         (response, status) => {
           if (status === 'OK') {
             const origins = response.originAddresses;
@@ -30,25 +17,19 @@ class CalcTravel extends Component {
                 const duration = element.duration.text;
                 const from = origins[i];
                 const to = destinations[j];
-                this.setState({
-                  returnedData: {
+                const returnedData = {
                     distance: distance,
                     duration: duration,
                     to: to,
                     from: from
                   }
-                })
-              this.props.set(this.state.returnedData)
-              this.props.reset()
+                props.set(returnedData)
+                props.reset()
+                }
             }
           }
-        }
-      })
-    }
-    return (
-      <></>
-    )
-  }
-}
+        })
+      }
+
 
 export default CalcTravel

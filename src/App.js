@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
-import RenderMap from './components/RenderMap';
 import CalcTravel from './components/CalcTravel';
 import AutoCompleteInput from './components/TestForm';
 import DisplayResults from './components/DisplayResults';
 import CalcBestRoute from './components/CalcBestRoute';
+import DisplayBestRoute from './components/DisplayBestRoute';
 import { Redirect, Route } from 'react-router-dom';
 import {GoogleApiWrapper} from "google-maps-react";
 
@@ -12,9 +12,8 @@ class App extends Component {
   constructor(props) {
     super(props)
     this.state={
-      getWalk: false,
-      getDrive: false,
-      displayResults: false,
+      displayWalk: false,
+      displayDrive: false,
       currentLocation: '',
       walkCalcs: {},
       driveCalcs: {},
@@ -29,19 +28,31 @@ class App extends Component {
         destinations: [],
         travelMode: 'DRIVING',
         unitSystem: props.google.maps.UnitSystem.IMPERIAL,
+      },
+      bestRoute: {
+        best: '',
+        diff: null
       }
     }
     this.setWalk = this.setWalk.bind(this)
     this.setDrive = this.setDrive.bind(this)
     this.setOriginDestination = this.setOriginDestination.bind(this)
-    this.reset = this.reset.bind(this)
+    this.setBestRoute = this.setBestRoute.bind(this)
+    this.resetWalk = this.resetWalk.bind(this)
+    this.resetDrive = this.resetDrive.bind(this)
   }
 
-  reset() {
+  resetWalk() {
     this.setState({
       getWalk: false,
+      displayWalk: true,
+    })
+  }
+
+  resetDrive() {
+    this.setState({
       getDrive: false,
-      displayResults: true,
+      displayDrive: true,
     })
   }
 
@@ -53,15 +64,14 @@ class App extends Component {
 
   setDrive(driveCalcs) {
     this.setState({
-      driveCalcs: driveCalcs,
+      driveCalcs: driveCalcs
     })
   }
 
   setOriginDestination(address) {
     this.setState({
-      getWalk: true,
-      getDrive: true,
-      displayResults: false,
+      displayWalk: false,
+      displayDrive: false,
       walkData: {
         origins: [`${this.state.currentLocation}`],
         destinations: [`${address}`],
@@ -77,8 +87,17 @@ class App extends Component {
     })
   }
 
+  setBestRoute(bestRoute) {
+    this.setState({
+      bestRoute: {
+        best: bestRoute.best,
+        diff: bestRoute.diff
+      }
+    })
+  }
+
   componentDidMount() {
-    navigator.geolocation.watchPosition((position) => {
+    navigator.geolocation.getCurrentPosition((position) => {
       this.setState({
         currentLocation: `${position.coords.latitude}, ${position.coords.longitude}`
       })
@@ -86,63 +105,50 @@ class App extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <header>
-          <h1 className='title'>WALK or DRIVE</h1>
-        </header>
-        <CalcTravel
-          getResults={this.state.getWalk}
-          travelData={this.state.walkData}
-          maps={this.props}
-          reset={this.reset}
-          set={this.setWalk}/>
-        <CalcTravel
-          getResults={this.state.getDrive}
-          travelData={this.state.driveData}
-          maps={this.props}
-          reset={this.reset}
-          set={this.setDrive}/>
-        <Route path='/' render={(props) =>
-            <AutoCompleteInput
-              setOriginDestination={this.setOriginDestination}
-              handleSubmit={this.handleSubmit}
-            />
-        }/>
-
-        <Route exact path="/" render={() => (
-          (this.state.displayResults === true)? (
-            <Redirect push to="/results"/>
-          ) : (
-            <div></div>
-          )
-        )}/>
-
-        <Route path='/results' component={()=>
+      return (
+        <div className="App">
+          <header>
+            <h1 className='title'>WALK or DRIVE</h1>
+          </header>
+        <Route path="/" render={(props) => (
           <>
-            <div className='all-results'>
-              <div className='result-container'>
-                <DisplayResults
-                  result='walk-results'
-                  moveType='walk'
-                  state={this.state.walkCalcs}
-                />
-                <DisplayResults
-                  result='drive-results'
-                  moveType='drive'
-                  state={this.state.driveCalcs}
-                />
-              </div>
-              <div className='best-container'>
-                <CalcBestRoute
-                  walk={this.state.walkCalcs}
-                  drive={this.state.driveCalcs}/>
-              </div>
-            </div>
+            <AutoCompleteInput
+            setOriginDestination={this.setOriginDestination}
+            handleSubmit={this.handleSubmit}
+            runCalcs={this.runCalcs}
+            />
+            {(this.state.displayWalk === true && this.state.displayDrive === true)?
+              ( <Redirect from='/' to="/results"/> ):
+              (<></>)}
           </>
-        }/>
-      </div>
-    );
+          )}/>
+
+        <Route path='/results' render={()=> (
+            <>
+              <div className='all-results'>
+                <div className='result-container'>
+                  <DisplayResults
+                    result='walk-results'
+                    moveType='walk'
+                    state={this.state.walkCalcs}
+                  />
+                  <DisplayResults
+                    result='drive-results'
+                    moveType='drive'
+                    state={this.state.driveCalcs}
+                  />
+                </div>
+                <div className='best-container'>
+                  <DisplayBestRoute
+                    moveType={this.state.bestRoute.best}
+                    diff={this.state.bestRoute.diff}
+                  />
+                </div>
+              </div>
+            </>
+          )}/>
+        </div>
+      )
   }
 }
 

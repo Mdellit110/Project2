@@ -4,7 +4,9 @@ import PlacesAutocomplete from 'react-places-autocomplete';
 class AutoCompleteInput extends Component {
   constructor(props) {
     super(props);
-    this.state = { address: '' };
+    this.state = {
+      address: ''
+    }
   }
 
   handleChange = (address) => {
@@ -18,8 +20,11 @@ class AutoCompleteInput extends Component {
   render() {
     return (
       <form onSubmit={(ev) => {
-          ev.preventDefault()
+        ev.preventDefault()
+        if (this.state.address !== '') {
           this.props.setOriginDestination(this.state.address);
+          this.setState({ address: '' })
+        }
         }}>
         <PlacesAutocomplete
           value={this.state.address}
@@ -27,7 +32,7 @@ class AutoCompleteInput extends Component {
           onSelect={this.handleSelect}
         >
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
-            <div>
+            <div className='input-and-auto'>
               <input
                 {...getInputProps({
                   placeholder: 'Where to?',

@@ -1,0 +1,26 @@
+im trying to find a way to call these components when setOriginDestination() runs
+
+setOriginDestination() is turned on by the onSubmit on form in TestForm.jsx
+
+
+
+return (
+  <>
+    <CalcTravel
+      getResults={this.state.getWalk}
+      travelData={this.state.walkData}
+      maps={this.props}
+      reset={this.resetWalk}
+      set={this.setWalk}/>
+    <CalcTravel
+      getResults={this.state.getDrive}
+      travelData={this.state.driveData}
+      maps={this.props}
+      reset={this.resetDrive}
+      set={this.setDrive}/>
+    <CalcBestRoute
+      drive={this.state.driveCalcs}
+      walk={this.state.walkCalcs}
+      set={this.setBestRoute}/>
+  </>
+)
