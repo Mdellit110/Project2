@@ -168,6 +168,7 @@ class App extends PureComponent {
             handleSubmit={this.handleSubmit}
             runCalcs={this.runCalcs}
             />
+          <div className='empty'></div>
           {(this.state.bestRoute.diff)?
               ( <Redirect from='/' to="/results"/> ):
               (<></>)}
@@ -178,16 +179,22 @@ class App extends PureComponent {
             <>
               <div className='all-results'>
                 <div className='result-container'>
-                  <DisplayResults
-                    result='walk-results'
-                    moveType='walk'
-                    state={this.state.walkCalcs}
-                  />
-                  <DisplayResults
-                    result='drive-results'
-                    moveType='drive'
-                    state={this.state.driveCalcs}
-                  />
+                  <div className='walk'>
+                    <i className="fas fa-walking"></i>
+                    <DisplayResults
+                      result='walk-results'
+                      moveType='walk'
+                      state={this.state.walkCalcs}
+                    />
+                  </div>
+                  <div className='drive'>
+                    <i className="fas fa-car"></i>
+                    <DisplayResults
+                      result='drive-results'
+                      moveType='drive'
+                      state={this.state.driveCalcs}
+                    />
+                  </div>
                 </div>
                 <div className='best-container'>
                   <DisplayBestRoute

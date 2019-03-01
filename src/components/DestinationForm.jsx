@@ -59,7 +59,7 @@ class AutoCompleteInput extends Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <button>GO</button>
+        <button><i className="fas fa-angle-double-right"></i></button>
       </form>
     );
   }

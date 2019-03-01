@@ -12,7 +12,8 @@
 }
 
 form {
-  margin: 10vh auto 0 auto;
+  margin: 18vmin auto 0 auto;
+  position: absolute;
   text-align: center;
   right: 0;
   left: 0;
@@ -21,17 +22,27 @@ form {
   align-items: flex-start;
   z-index: 100;
  }
+ .empty {
+  background: #DBCDAF;
+  margin: 0 auto 0 auto;
+  height: 18vmin;
+  right: 0;
+  left: 0;
+  display: flex;
+  z-index: -2;
+ }
 
 button {
   align-self: flex-start;
-  background: #86D4DE;
+  background: #DBCDAF;
   font-size: 120%;
   color: #683E08;
   width: 3rem;
   height: 3rem;
   border: none;
   border-radius: 50%;
-  box-shadow: 0 15px 38px rgba(0,0,0,0.30), 0 11px 12px rgba(0,0,0,0.22);
+  margin-top: .1rem;
+  z-index: -1;
 }
 
 .input-and-auto {
@@ -67,9 +78,10 @@ input:focus, button:focus{
 }
 
 button:active {
-  background-color: #639ba3;
   width: 2.9rem;
   height: 2.9rem;
+  margin-top: .3rem;
+  margin-right: .1rem;
 }
 
 .autocomplete-dropdown-container {
@@ -120,6 +132,20 @@ p {
   justify-content: space-around;
 }
 
+.walk, .drive  {
+  margin: auto;
+  width: 40vmin;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+i {
+  align-self: center;
+  color: #683E08;
+  font-size: 220%;
+}
+
 .best-container {
   margin: 10vmin auto 0 auto;
   width: 100vw;
@@ -148,7 +174,7 @@ p {
 
 .best-route {
   color: #683E08;
-  font-size: 100%;
+  font-size: 200%;
   text-align: center;
   background: #86D4DE;
   border-radius: 10px;
