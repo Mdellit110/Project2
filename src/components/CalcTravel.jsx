@@ -1,12 +1,10 @@
-
-
+import React from 'react'
 const CalcTravel = (props) => {
-  debugger;
     const resp = new props.maps.google.maps.DistanceMatrixService();
       resp.getDistanceMatrix(
         props.travelData,
         (response, status) => {
-          if (status === 'OK') {
+          if (status === 'OK' && response) {
             const origins = response.originAddresses;
             const destinations = response.destinationAddresses;
             for (let i = 0; i < origins.length; i++) {
@@ -29,6 +27,7 @@ const CalcTravel = (props) => {
             }
           }
         })
+        return null
       }
 
 

@@ -4,9 +4,9 @@ import doMaths from '../services/helper_function'
 let best = '';
 let diff = null;
 
-const CalcBestRoute = (props) => {
-      const driveDur = props.drive.duration;
-      const walkDur = props.walk.duration;
+const CalcBestRoute = (driveData, walkData, set) => {
+      const driveDur = driveData.duration;
+      const walkDur = walkData.duration;
       const {walk, drive} = doMaths(driveDur, walkDur)
       if (drive >= walk) {
         diff = drive - walk
@@ -19,7 +19,8 @@ const CalcBestRoute = (props) => {
         diff: diff,
         best: best
       }
-      props.set(bestRoute)
+      set(bestRoute)
+      return null
 }
 
 export default CalcBestRoute

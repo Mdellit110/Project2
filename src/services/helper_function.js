@@ -9,7 +9,7 @@ const doMaths = (driveDur, walkDur) => {
     if (walkArr[1] === 'mins') {
       let walkMins = parseInt(walkArr[0]);
       walkTotalMins = walkMins;
-    } else if (walkArr[1] === 'hours') {
+    } else if (walkArr[1] === 'hour' || walkArr[1] === 'hours') {
       let walkHours = parseInt(walkArr[0]);
       let walkMins = parseInt(walkArr[2]);
       walkTotalMins = (walkHours * 60) + walkMins;
@@ -18,7 +18,7 @@ const doMaths = (driveDur, walkDur) => {
     if (driveArr[1] === 'mins') {
       let driveMins = parseInt(driveArr[0]);
       driveTotalMins = driveMins;
-    } else if (driveArr[1] === 'hours') {
+    } else if (driveArr[1] === 'hour' || driveArr[1] === 'hours') {
       let driveHours = parseInt(driveArr[0]);
       let driveMins = parseInt(driveArr[2]);
       driveTotalMins = (driveHours * 60) + driveMins;
