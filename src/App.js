@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import './App.css';
 import CalcTravel from './components/CalcTravel';
-import AutoCompleteInput from './components/TestForm';
+import AutoCompleteInput from './components/DestinationForm';
 import DisplayResults from './components/DisplayResults';
 import CalcBestRoute from './components/CalcBestRoute';
 import DisplayBestRoute from './components/DisplayBestRoute';
