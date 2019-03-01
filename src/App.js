@@ -121,8 +121,6 @@ class App extends PureComponent {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log(this.state.displayWalk);
-    console.log(this.state.displayDrive);
     if (this.state.displayWalk === true && this.state.displayDrive === true && this.state.gotBest === false) {
       drive = this.state.driveCalcs
       walk = this.state.walkCalcs
