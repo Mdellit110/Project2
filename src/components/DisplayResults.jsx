@@ -1,14 +1,14 @@
-import React from 'react'
+import React from "react";
 
-const DisplayResults = (props) => {
-  return(
+const DisplayResults = props => {
+  return (
     <div className={props.result}>
       <div>
-      <h2>{props.moveType.toUpperCase()} TIME</h2>
+        <h2>{props.moveType.toUpperCase()} TIME</h2>
       </div>
-      <p className=''>{props.state.duration}</p>
+      <p className="">{props.state.duration}</p>
     </div>
-  )
-}
+  );
+};
 
-export default DisplayResults
+export default DisplayResults;

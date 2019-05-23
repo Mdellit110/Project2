@@ -1,215 +1,217 @@
-import React, { PureComponent } from 'react';
-import './App.css';
-import CalcTravel from './components/CalcTravel';
-import AutoCompleteInput from './components/DestinationForm';
-import DisplayResults from './components/DisplayResults';
-import CalcBestRoute from './components/CalcBestRoute';
-import DisplayBestRoute from './components/DisplayBestRoute';
-import { Redirect, Route } from 'react-router-dom';
-import {GoogleApiWrapper} from "google-maps-react";
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import CalcTravel from "./components/CalcTravel";
+import AutoCompleteInput from "./components/DestinationForm";
+import DisplayResults from "./components/DisplayResults";
+import CalcBestRoute from "./components/CalcBestRoute";
+import DisplayBestRoute from "./components/DisplayBestRoute";
+import { Redirect, Route } from "react-router-dom";
+import { GoogleApiWrapper } from "google-maps-react";
 
-let drive;
-let walk;
-let set;
-
-class App extends PureComponent {
-  constructor(props) {
-    super(props)
-    this.state={
-      displayWalk: false,
-      displayDrive: false,
-      currentLocation: '',
-      walkCalcs: {},
-      driveCalcs: {},
-      walkData: {
-        origins: [],
-        destinations: [],
-        travelMode: 'WALKING',
-        unitSystem: props.google.maps.UnitSystem.IMPERIAL,
-      },
-      driveData: {
-        origins: [],
-        destinations: [],
-        travelMode: 'DRIVING',
-        unitSystem: props.google.maps.UnitSystem.IMPERIAL,
-      },
-      bestRoute: {
-        best: '',
-        diff: null
-      },
-      callWalk: false,
-      callDrive: false,
-      gotBest: false
+function App(props) {
+  const [calcs, setCalcs] = useState({
+    walkCalcs: {},
+    driveCalcs: {},
+    bestRoute: {
+      best: "",
+      diff: null
+    },
+    callWalk: false,
+    callDrive: false,
+    gotBest: false
+  });
+  const [location, setLocation] = useState("");
+  const [state, setState] = useState({
+    displayWalk: false,
+    displayDrive: false,
+    walkData: {
+      origins: [],
+      destinations: [],
+      travelMode: "WALKING",
+      unitSystem: props.google.maps.UnitSystem.IMPERIAL
+    },
+    driveData: {
+      origins: [],
+      destinations: [],
+      travelMode: "DRIVING",
+      unitSystem: props.google.maps.UnitSystem.IMPERIAL
     }
-    this.setWalk = this.setWalk.bind(this)
-    this.setDrive = this.setDrive.bind(this)
-    this.setOriginDestination = this.setOriginDestination.bind(this)
-    this.setBestRoute = this.setBestRoute.bind(this)
-    this.resetWalk = this.resetWalk.bind(this)
-    this.resetDrive = this.resetDrive.bind(this)
-  }
+  });
 
-  resetWalk() {
-    this.setState({
+  function resetWalk() {
+    setState({
+      ...state,
       getWalk: false,
-      displayWalk: true,
-    })
+      displayWalk: true
+    });
   }
 
-  resetDrive() {
-    this.setState({
+  function resetDrive() {
+    setState({
+      ...state,
       getDrive: false,
-      displayDrive: true,
-    })
+      displayDrive: true
+    });
   }
 
-  setWalk(walkCalcs) {
-    this.setState({
+  function setWalk(walkCalcs) {
+    console.log("walk");
+    setCalcs({
+      ...calcs,
       walkCalcs: walkCalcs,
       callWalk: false
-    })
+    });
   }
 
-  setDrive(driveCalcs) {
-    this.setState({
+  function setDrive(driveCalcs) {
+    console.log("Drive");
+    setCalcs({
+      ...calcs,
       driveCalcs: driveCalcs,
       callDrive: false
-    })
+    });
   }
 
-  setOriginDestination(address) {
-    if (this.state.currentLocation) {
-      this.setState({
+  function setOriginDestination(address) {
+    if (location) {
+      setState({
+        ...state,
         displayWalk: false,
         displayDrive: false,
         walkData: {
-          origins: [`${this.state.currentLocation}`],
+          origins: [`${location}`],
           destinations: [`${address}`],
-          travelMode: 'WALKING',
-          unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
+          travelMode: "WALKING",
+          unitSystem: props.google.maps.UnitSystem.IMPERIAL
         },
         driveData: {
-          origins: [`${this.state.currentLocation}`],
+          origins: [`${location}`],
           destinations: [`${address}`],
-          travelMode: 'DRIVING',
-          unitSystem: this.props.google.maps.UnitSystem.IMPERIAL,
-        },
+          travelMode: "DRIVING",
+          unitSystem: props.google.maps.UnitSystem.IMPERIAL
+        }
+      });
+      setCalcs({
+        ...calcs,
         callWalk: true,
         callDrive: true,
         gotBest: false
-      })
+      });
     }
   }
 
-  setBestRoute(bestRoute) {
-    this.setState({
+  function setBestRoute(bestRoute) {
+    bestRoute.diff = `${Math.floor(
+      bestRoute.diff / 60
+    )} hours ${bestRoute.diff % 60} minutes`;
+    setCalcs({
+      ...calcs,
       bestRoute: {
         best: bestRoute.best,
         diff: bestRoute.diff
       },
       gotBest: true
-    })
+    });
   }
 
-  componentDidMount() {
-    if (this.state.currentLocation === '')
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.setState({
-        currentLocation: `${position.coords.latitude}, ${position.coords.longitude}`
-      })
-    })
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.displayWalk === true && this.state.displayDrive === true && this.state.gotBest === false) {
-      drive = this.state.driveCalcs
-      walk = this.state.walkCalcs
-      set = this.setBestRoute
-      CalcBestRoute(drive, walk, set)
+  function onRender() {
+    if (location === "") {
+      navigator.geolocation.getCurrentPosition(position => {
+        setLocation(
+          `${position.coords.latitude}, ${position.coords.longitude}`
+        );
+      });
     }
   }
 
+  useEffect(() => onRender(), [location]);
 
+  useEffect(
+    () => {
+      if (calcs.driveCalcs && calcs.walkCalcs) {
+        const bestRoute = CalcBestRoute(calcs.driveCalcs, calcs.walkCalcs);
+        console.log(bestRoute);
+        setBestRoute(bestRoute);
+      }
+    },
+    [calcs.driveCalcs, calcs.walkCalcs]
+  );
 
-  render() {
-      return (
-        <div className="App">
-          <header>
-            <h1 className='title'>WALK or DRIVE</h1>
-          </header>
-          <>
-            {(this.state.callWalk === false)?
-              (<></>):
-              (<>
-                <CalcTravel
-                  getResults={this.state.getWalk}
-                  travelData={this.state.walkData}
-                  maps={this.props}
-                  reset={this.resetWalk}
-                  set={this.setWalk}/>
-              </>)
-            }
-            {(this.state.callDrive === false)?
-              (<></>):
-              (<>
-                <CalcTravel
-                  getResults={this.state.getDrive}
-                  travelData={this.state.driveData}
-                  maps={this.props}
-                  reset={this.resetDrive}
-                  set={this.setDrive}/>
-              </>)
-            }
-          </>
-        <Route path="/" render={(props) => (
-          <>
-            <AutoCompleteInput
-            setOriginDestination={this.setOriginDestination}
-            handleSubmit={this.handleSubmit}
-            runCalcs={this.runCalcs}
-            />
-          <div className='empty'></div>
-          {(this.state.bestRoute.diff)?
-              ( <Redirect from='/' to="/results"/> ):
-              (<></>)}
-          </>
-          )}/>
+  useEffect(
+    () => {
+      if (calcs.callWalk === true) {
+        CalcTravel(props.google.maps, state.walkData, setWalk, resetWalk);
+      } else if (calcs.callDrive === true) {
+        CalcTravel(props.google.maps, state.driveData, setDrive, resetDrive);
+      }
+    },
+    [calcs.callWalk, calcs.callDrive]
+  );
 
-        <Route path='/results' render={()=> (
-            <>
-              <div className='all-results'>
-                <div className='result-container'>
-                  <div className='walk'>
-                    <i className="fas fa-walking"></i>
-                    <DisplayResults
-                      result='walk-results'
-                      moveType='walk'
-                      state={this.state.walkCalcs}
-                    />
+  return (
+    <div className="App">
+      <header>
+        <h1 className="title">WALK or DRIVE</h1>
+      </header>
+      {location ? (
+        <>
+          <Route
+            path="/"
+            render={() => (
+              <>
+                <AutoCompleteInput
+                  setOriginDestination={setOriginDestination}
+                />
+                <div className="empty" />
+                {calcs.bestRoute.diff ? (
+                  <Redirect from="/" to="/results" />
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          />
+          <Route
+            path="/results"
+            render={() => (
+              <>
+                <div className="all-results">
+                  <div className="result-container">
+                    <div className="walk">
+                      <i className="fas fa-walking" />
+                      <DisplayResults
+                        result="walk-results"
+                        moveType="walk"
+                        state={calcs.walkCalcs}
+                      />
+                    </div>
+                    <div className="drive">
+                      <i className="fas fa-car" />
+                      <DisplayResults
+                        result="drive-results"
+                        moveType="drive"
+                        state={calcs.driveCalcs}
+                      />
+                    </div>
                   </div>
-                  <div className='drive'>
-                    <i className="fas fa-car"></i>
-                    <DisplayResults
-                      result='drive-results'
-                      moveType='drive'
-                      state={this.state.driveCalcs}
+                  <div className="best-container">
+                    <DisplayBestRoute
+                      moveType={calcs.bestRoute.best}
+                      diff={calcs.bestRoute.diff}
                     />
                   </div>
                 </div>
-                <div className='best-container'>
-                  <DisplayBestRoute
-                    moveType={this.state.bestRoute.best}
-                    diff={this.state.bestRoute.diff}
-                  />
-                </div>
-              </div>
-            </>
-          )}/>
-        </div>
-      )
-  }
+              </>
+            )}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+    </div>
+  );
 }
 
 export default GoogleApiWrapper({
-  apiKey: process.env.REACT_APP_API_KEY,
+  apiKey: process.env.REACT_APP_API_KEY
 })(App);
