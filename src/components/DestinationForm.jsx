@@ -20,6 +20,8 @@ class AutoCompleteInput extends Component {
   render() {
     return (
       <form
+        action=""
+        method="get"
         onSubmit={ev => {
           ev.preventDefault();
           if (this.state.address !== "") {

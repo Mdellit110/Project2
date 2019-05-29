@@ -14,6 +14,10 @@ const CalcBestRoute = (driveData, walkData) => {
     diff = walk - drive;
     best = "drive";
   }
+  diff =
+    diff > 60
+      ? `${Math.floor(diff / 60)} hours ${diff % 60} minutes`
+      : `${diff} minutes`;
   const bestRoute = {
     diff: diff,
     best: best

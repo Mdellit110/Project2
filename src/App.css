@@ -142,7 +142,7 @@ p {
 .result {
   margin: auto;
   margin-top: 0;
-  width: 40vmin;
+  width: 200px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
