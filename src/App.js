@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Tabs from "./components/Tabs";
 function App(props) {
   const [mode, setMode] = useState("Home");
+  const [showMap, setShowMap] = useState(false);
   const [travelType, setTravelType] = useState(null);
   const [location, setLocation] = useState("");
   const [rendered, setRendered] = useState(false);
@@ -20,14 +21,13 @@ function App(props) {
     }
   }
   useEffect(() => findPerson(), [location]);
-
   useEffect(
     () => {
       if (mode === "Home") setHasResults(false);
     },
     [mode]
   );
-
+  useEffect(() => console.log(showMap), [showMap]);
   return (
     <div className="App">
       <div className="nav">
@@ -40,7 +40,8 @@ function App(props) {
       {mode !== "Home" ? (
         <WalkOrDrive
           location={location}
-          rendered={rendered}
+          showMap={showMap}
+          setShowMap={setShowMap}
           travelType={travelType}
           setTravelType={setTravelType}
           hasResults={hasResults}

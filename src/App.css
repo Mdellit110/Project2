@@ -8,6 +8,7 @@
   font-family: "Quicksand", sans-serif;
   position: relative;
   z-index: 0;
+  overflow: hidden;
 }
 Wrapper {
   height: 100%;
@@ -33,7 +34,11 @@ Wrapper {
   text-align: center;
   font-weight: 800;
 }
-
+.searchbar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
 form {
   text-align: center;
   right: 0;
@@ -223,7 +228,12 @@ h2 {
   padding: 5%;
   text-align: center;
 }
-
+.map {
+  max-height: 60%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media only screen and (max-width: 600px) {
   h1.title {
     font-size: 100%;

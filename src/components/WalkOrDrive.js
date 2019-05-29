@@ -4,10 +4,13 @@ import AutoCompleteInput from "./DestinationForm";
 import DisplayResults from "./DisplayResults";
 import CalcBestRoute from "./CalcBestRoute";
 import DisplayBestRoute from "./DisplayBestRoute";
+import Map from "./Map";
 import { GoogleApiWrapper } from "google-maps-react";
 function WalkOrDrive(props) {
   const {
     location,
+    showMap,
+    setShowMap,
     travelType,
     setTravelType,
     setHasResults,
@@ -84,8 +87,13 @@ function WalkOrDrive(props) {
 
   return (
     <div>
-      <AutoCompleteInput setOriginDestination={startSearch} />
-
+      <div className="searchbar">
+        <button onClick={() => setShowMap(!showMap)}>Map</button>
+        <AutoCompleteInput
+          setShowMap={setShowMap}
+          setOriginDestination={startSearch}
+        />
+      </div>
       {hasResults ? (
         <div className="all-results">
           <div className="result-container">
@@ -124,7 +132,13 @@ function WalkOrDrive(props) {
             ) : null}
           </div>
         </div>
-      ) : null}
+      ) : (
+        <div className="best-route">
+          <div>Search above and click the arrow for results!</div>
+          <div>Toggle map with the map button</div>
+        </div>
+      )}
+      <Map showMap={showMap} location={location} />
     </div>
   );
 }

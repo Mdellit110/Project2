@@ -68,7 +68,7 @@ class AutoCompleteInput extends Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <button className="auto-button">
+        <button type="submit" className="auto-button">
           <i className="fas fa-angle-double-right" />
         </button>
       </form>
