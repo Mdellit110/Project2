@@ -6,8 +6,8 @@ export default function Map({ showMap, location }) {
   const currentLocation = { lat: split[0], lng: split[1] };
   const style = {
     position: "relative",
-    height: "50vmin",
-    width: "90%"
+    height: "73%",
+    width: "98%"
   };
   return (
     <div className="map-container">
