@@ -86,11 +86,7 @@ function WalkOrDrive(props) {
   return (
     <div>
       <div className="searchbar">
-        <button onClick={() => setShowMap(!showMap)}>Map</button>
-        <AutoCompleteInput
-          setShowMap={setShowMap}
-          setOriginDestination={startSearch}
-        />
+        <AutoCompleteInput setOriginDestination={startSearch} />
       </div>
       {hasResults ? (
         <div className="all-results">
