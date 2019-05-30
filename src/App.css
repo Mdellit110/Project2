@@ -228,6 +228,13 @@ h2 {
   padding: 5%;
   text-align: center;
 }
+.map-container {
+  padding-top: 30px;
+}
+.map-container,
+.map-ref {
+  height: 250px;
+}
 .map {
   max-height: 60%;
   display: flex;

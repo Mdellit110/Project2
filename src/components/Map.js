@@ -1,25 +1,27 @@
-import React from "react";
-import { Map as GoogleMap, Marker } from "google-maps-react";
+import React, { useEffect } from "react";
+import useMap from "./useMap";
 
-export default function Map({ showMap, location }) {
-  const split = location.split(", ");
-  const currentLocation = { lat: split[0], lng: split[1] };
-  const style = {
-    position: "relative",
-    height: "73%",
-    width: "98%"
-  };
+export default function Map({
+  maps,
+  location,
+  destinations,
+  travelType,
+  children
+}) {
+  const { googleMaps, map, mapRef, loading } = useMap({
+    maps,
+    destinations,
+    location,
+    travelType
+  });
+
   return (
     <div className="map-container">
-      <GoogleMap
-        google={window.google}
-        className="map"
-        visible={showMap}
-        style={style}
-        initialCenter={currentLocation}
-      >
-        <Marker position={currentLocation} />
-      </GoogleMap>
+      <div ref={mapRef} className="map-ref" />
+      {!loading &&
+        React.Children.map(children, child => {
+          return React.cloneElement(child, { map, googleMaps });
+        })}
     </div>
   );
 }

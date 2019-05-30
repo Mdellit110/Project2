@@ -21,7 +21,6 @@ function WalkOrDrive(props) {
     walkCalcs: {},
     driveCalcs: {}
   });
-  const [rendered, setRender] = useState(false);
   const [bestRoute, setBestRoute] = useState({
     best: "",
     diff: null
@@ -79,8 +78,7 @@ function WalkOrDrive(props) {
 
   useEffect(
     () => {
-      if (rendered) doCalculations();
-      setRender(true);
+      doCalculations();
     },
     [destinations]
   );
@@ -118,17 +116,37 @@ function WalkOrDrive(props) {
               </div>
             ) : null}
             {travelType === "Compare" ? (
-              <div className="result">
-                <i
-                  className={
-                    bestRoute.best === "drive" ? "fas fa-car" : "fas fa-walking"
-                  }
-                />
-                <DisplayBestRoute
-                  moveType={bestRoute.best}
-                  diff={bestRoute.diff}
-                />
-              </div>
+              <>
+                <div className="result">
+                  <i className="fas fa-walking" />
+                  <DisplayResults
+                    result="walk-results"
+                    moveType="walk"
+                    state={calcs.walkCalcs}
+                  />
+                </div>
+                <div className="result">
+                  <i
+                    className={
+                      bestRoute.best === "drive"
+                        ? "fas fa-car"
+                        : "fas fa-walking"
+                    }
+                  />
+                  <DisplayBestRoute
+                    moveType={bestRoute.best}
+                    diff={bestRoute.diff}
+                  />
+                </div>
+                <div className="result">
+                  <i className="fas fa-car" />
+                  <DisplayResults
+                    result="drive-results"
+                    moveType="drive"
+                    state={calcs.driveCalcs}
+                  />
+                </div>
+              </>
             ) : null}
           </div>
         </div>
@@ -138,7 +156,13 @@ function WalkOrDrive(props) {
           <div>Toggle map with the map button</div>
         </div>
       )}
-      <Map showMap={showMap} location={location} />
+      <Map
+        maps={props.google.maps}
+        destinations={destinations}
+        showMap={showMap}
+        location={location}
+        travelType={travelType}
+      />
     </div>
   );
 }

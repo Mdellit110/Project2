@@ -1,6 +1,5 @@
 async function CalcTravel(maps, { walk, drive }) {
   const calc = new maps.DistanceMatrixService();
-
   const getDistanceMatrix = data =>
     new Promise((resolve, reject) => {
       calc.getDistanceMatrix(data, (response, status) => {

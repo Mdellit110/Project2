@@ -27,7 +27,6 @@ function App(props) {
     },
     [mode]
   );
-  useEffect(() => console.log(showMap), [showMap]);
   return (
     <div className="App">
       <div className="nav">
