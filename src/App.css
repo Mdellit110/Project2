@@ -137,7 +137,8 @@ p {
 
 .all-results {
   font-weight: bold;
-  margin-top: 20%;
+  position: relative;
+  bottom: 30%;
 }
 
 .result-container {
@@ -193,15 +194,22 @@ i {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
 .best-route {
   color: #683e08;
   text-align: center;
   background: #86d4de;
   border-radius: 10px;
-  width: fit-content;
+  padding: 4%;
+  justify-content: center;
+}
+.route-intro {
+  color: #683e08;
+  text-align: center;
+  background: #86d4de;
+  border-radius: 10px;
   padding: 3%;
-  margin-top: 20%;
   justify-content: center;
 }
 

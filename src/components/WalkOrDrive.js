@@ -147,9 +147,11 @@ function WalkOrDrive(props) {
           </div>
         </div>
       ) : (
-        <div className="best-route">
-          <div>Search above and click the arrow for results!</div>
-          <div>Toggle map with the map button</div>
+        <div className="all-results">
+          <div className="route-intro">
+            <div>Search above and click the arrow for results!</div>
+            <div>Toggle map with the map button</div>
+          </div>
         </div>
       )}
       <Map
