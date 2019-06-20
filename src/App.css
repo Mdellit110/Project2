@@ -1,3 +1,6 @@
+:root {
+  --bg-color: #bc9c57;
+}
 .App {
   background: #dbcdaf;
   display: flex;
@@ -15,8 +18,9 @@ Wrapper {
 }
 .nav {
   display: flex;
-  background-color: #bc9c57;
+  background-color: var(--bg-color);
   flex-direction: column;
+  height: 13%;
 }
 .button-group {
   display: flex;
@@ -35,9 +39,9 @@ Wrapper {
   font-weight: 800;
 }
 .searchbar {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  position: fixed;
+  top: calc(13% + 5px);
+  margin-left: 10px;
 }
 form {
   text-align: center;
@@ -133,7 +137,7 @@ p {
 
 .all-results {
   font-weight: bold;
-  margin: 10vmin auto 0 auto;
+  margin-top: 20%;
 }
 
 .result-container {
@@ -184,14 +188,21 @@ i {
   border-radius: 10px;
   padding: 3%;
 }
-
+.calculation-page {
+  height: calc(100vh - 13%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .best-route {
   color: #683e08;
-  font-size: 100%;
   text-align: center;
   background: #86d4de;
   border-radius: 10px;
+  width: fit-content;
   padding: 3%;
+  margin-top: 20%;
+  justify-content: center;
 }
 
 h2 {
@@ -212,7 +223,6 @@ h2 {
   background-color: white;
   border-radius: 5px;
   width: 90%;
-  height: 93%;
   box-shadow: 0 15px 38px rgba(0, 0, 0, 0.3), 0 11px 12px rgba(0, 0, 0, 0.22);
 }
 .home-float h2 {
@@ -229,11 +239,13 @@ h2 {
   text-align: center;
 }
 .map-container {
-  padding-top: 30px;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+  height: 50%;
 }
-.map-container,
 .map-ref {
-  height: 250px;
+  height: calc(100%);
 }
 .map {
   max-height: 60%;

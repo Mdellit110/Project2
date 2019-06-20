@@ -84,7 +84,7 @@ function WalkOrDrive(props) {
   );
 
   return (
-    <div>
+    <div className="calculation-page">
       <div className="searchbar">
         <AutoCompleteInput setOriginDestination={startSearch} />
       </div>

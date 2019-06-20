@@ -49,9 +49,6 @@ function App(props) {
       ) : (
         <Home />
       )}
-      {hasResults ? (
-        <Tabs action={setTravelType} tabs={["Walk", "Compare", "Drive"]} />
-      ) : null}
     </div>
   );
 }
