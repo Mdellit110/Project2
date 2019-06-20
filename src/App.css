@@ -139,6 +139,7 @@ p {
   font-weight: bold;
   position: relative;
   bottom: 30%;
+  z-index: -1;
 }
 
 .result-container {
