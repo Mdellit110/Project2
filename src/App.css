@@ -4,6 +4,9 @@
 html {
   overflow: hidden;
 }
+* {
+  transition: 0.5s;
+}
 .App {
   background: #dbcdaf;
   display: flex;
@@ -19,31 +22,35 @@ html {
 Wrapper {
   height: 100%;
 }
-.nav {
-  display: flex;
+.nav.Home {
   background-color: var(--bg-color);
-  flex-direction: column;
-  height: 13%;
+  height: 8%;
+  box-shadow: 0 0 10px var(--bg-color);
+  z-index: 1;
 }
-.button-group {
-  display: flex;
-  justify-content: space-around;
+.nav.Home .title {
+  font-size: fit-content;
 }
-.button-group .tab {
-  width: auto;
-  color: white;
-  z-index: 2;
+.nav.Calculate {
+  background-color: var(--bg-color);
+  height: 10%;
+  box-shadow: 0 0 10px var(--bg-color);
+  z-index: 1;
+}
+.nav.Calculate .title {
+  font-size: 100%;
 }
 .title {
   color: #683e08;
   margin: 0;
-  height: auto;
+  height: 100%;
   text-align: center;
   font-weight: 800;
 }
+
 .searchbar {
   position: fixed;
-  top: calc(13% + 5px);
+  top: 4.5%;
   margin-left: 10px;
   z-index: 2;
 }
@@ -67,6 +74,10 @@ button {
   border: none;
   border-radius: 50%;
   margin-top: 0.1rem;
+  outline: none;
+}
+.calc-button {
+  width: 100%;
 }
 .auto-button {
   font-size: 100%;
@@ -88,7 +99,6 @@ button {
   text-align: center;
   margin-right: 1vmin;
   margin-top: 1vmin;
-  box-shadow: 0 15px 38px rgba(0, 0, 0, 0.3), 0 11px 12px rgba(0, 0, 0, 0.22);
 }
 
 input {
@@ -102,12 +112,12 @@ input {
   box-sizing: border-box;
   text-align: center;
   padding: 0;
+  box-shadow: inset 0 2px 2px var(--bg-color);
 }
 
-/* input:focus, */
-/* button:focus {
+input:focus {
   outline: none;
-} */
+}
 
 /* button:active {
   width: 2.9rem;
@@ -119,6 +129,10 @@ input {
 .autocomplete-dropdown-container {
   width: 100%;
   font-size: 60%;
+  box-shadow: 0 3px 5px grey;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  transition: 2s;
 }
 
 .suggestion-item {
@@ -141,8 +155,10 @@ p {
 
 .all-results {
   font-weight: bold;
-  margin-top: 20%;
-  z-index: 0;
+  z-index: 1;
+  margin: 10px;
+  /* position: relative;
+  top: 10%; */
 }
 
 .result-container {
@@ -254,7 +270,7 @@ h2 {
   width: 100%;
   position: fixed;
   bottom: 0;
-  height: 50%;
+  height: 90%;
 }
 .map-ref {
   height: calc(100%);
@@ -267,6 +283,5 @@ h2 {
 }
 @media only screen and (max-width: 600px) {
   h1.title {
-    font-size: 100%;
   }
 }

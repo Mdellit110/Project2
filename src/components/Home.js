@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Home() {
+export default function Home({ action }) {
   return (
     <div className="home-container">
       <div className="home-float">
@@ -8,6 +8,9 @@ export default function Home() {
         <p>
           click on the calculate button above to go to the distance calculator
         </p>
+        <button className="calc-button" onClick={() => action("Calculate")}>
+          Calculate
+        </button>
         <h3>How is this even useful?</h3>
         <p>
           at first it does seem silly to check which way is faster but you'd be

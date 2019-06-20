@@ -13,7 +13,8 @@ export default function useMap({ maps, destinations, location, travelType }) {
   console.log(currentLocation);
   const mapOptions = {
     zoom: 16,
-    center: currentLocation
+    center: currentLocation,
+    disableDefaultUI: true
   };
   const initMap = () => {
     console.log(mapOptions);

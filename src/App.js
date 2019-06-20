@@ -29,11 +29,8 @@ function App(props) {
   );
   return (
     <div className="App">
-      <div className="nav">
-        <header>
-          <h1 className="title">WALK or DRIVE</h1>
-        </header>
-        <Tabs action={setMode} tabs={["Calculate", "Home"]} />
+      <div className={`nav ${mode}`}>
+        <h1 className={`title ${mode}`}>WALK or DRIVE</h1>
       </div>
 
       {mode !== "Home" ? (
@@ -47,7 +44,7 @@ function App(props) {
           setHasResults={setHasResults}
         />
       ) : (
-        <Home />
+        <Home action={setMode} />
       )}
     </div>
   );
