@@ -156,15 +156,15 @@ p {
 .all-results {
   font-weight: bold;
   z-index: 1;
-  margin: 10px;
-  /* position: relative;
-  top: 10%; */
+  height: fit-content;
+  position: absolute;
+  bottom: 10%;
 }
 
 .result-container {
   margin: auto;
   width: 100vmin;
-  height: 100px;
+  height: fit-content;
   display: flex;
   justify-content: space-around;
 }
@@ -198,7 +198,7 @@ i {
   text-align: center;
   background: #86d4de;
   padding: 3%;
-  border-radius: 10px;
+  border-bottom-right-radius: 10px;
 }
 
 .walk-results {
@@ -206,7 +206,7 @@ i {
   font-size: 100%;
   text-align: center;
   background: #86d4de;
-  border-radius: 10px;
+  border-bottom-left-radius: 10px;
   padding: 3%;
 }
 .calculation-page {
@@ -220,7 +220,8 @@ i {
   color: #683e08;
   text-align: center;
   background: #86d4de;
-  border-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   padding: 4%;
   justify-content: center;
 }
