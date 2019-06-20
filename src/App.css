@@ -1,6 +1,9 @@
 :root {
   --bg-color: #bc9c57;
 }
+html {
+  overflow: hidden;
+}
 .App {
   background: #dbcdaf;
   display: flex;
