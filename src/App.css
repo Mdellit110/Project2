@@ -45,6 +45,7 @@ Wrapper {
   position: fixed;
   top: calc(13% + 5px);
   margin-left: 10px;
+  z-index: 2;
 }
 form {
   text-align: center;
@@ -141,7 +142,7 @@ p {
 .all-results {
   font-weight: bold;
   margin-top: 20%;
-  z-index: -1;
+  z-index: 0;
 }
 
 .result-container {
